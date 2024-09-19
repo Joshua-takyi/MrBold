@@ -1,0 +1,235 @@
+"use client";
+import { useState } from "react";
+
+export default function Home() {
+	const [fontSize, setFontSize] = useState(16);
+	const [fontWeight, setFontWeight] = useState(400);
+	const [lineHeight, setLineHeight] = useState(1.5);
+	const [letterSpacing, setLetterSpacing] = useState(0);
+	const [copied, setCopied] = useState(false);
+
+	const textStyle = {
+		fontSize: `${fontSize}px`,
+		fontWeight,
+		lineHeight,
+		letterSpacing: `${letterSpacing}px`,
+	};
+
+	const handleCopy = (format) => {
+		let textToCopy;
+		if (format === "css") {
+			textToCopy = `font-size: ${fontSize}px;
+font-weight: ${fontWeight};
+line-height: ${lineHeight};
+letter-spacing: ${letterSpacing}px;`;
+		} else if (format === "tailwind") {
+			textToCopy = `text-[${fontSize}px] font-[${fontWeight}] leading-[${lineHeight}] tracking-[${letterSpacing}px]`;
+		}
+
+		navigator.clipboard.writeText(textToCopy).then(() => {
+			setCopied(true);
+			setTimeout(() => setCopied(false), 2000);
+		});
+	};
+
+	return (
+		<div className="container mx-auto p-4">
+			<h1 className="text-2xl font-bold mb-4">Text Property Visualizer</h1>
+
+			<div className="mb-4">
+				<p
+					style={{
+						fontSize: `${fontSize}px`,
+						fontWeight,
+						lineHeight,
+						letterSpacing: `${letterSpacing}px`,
+					}}
+				>
+					Adjust the sliders to see how the text properties change!
+				</p>
+			</div>
+
+			<div className="space-y-4 mb-4">
+				<RangeInput
+					label="Font Size"
+					value={fontSize}
+					setValue={setFontSize}
+					min={8}
+					max={72}
+				/>
+				<RangeInput
+					label="Font Weight"
+					value={fontWeight}
+					setValue={setFontWeight}
+					min={100}
+					max={900}
+					step={100}
+				/>
+				<RangeInput
+					label="Line Height"
+					value={lineHeight}
+					setValue={setLineHeight}
+					min={0.5}
+					max={3}
+					step={0.1}
+				/>
+				<RangeInput
+					label="Letter Spacing"
+					value={letterSpacing}
+					setValue={setLetterSpacing}
+					min={-5}
+					max={20}
+				/>
+			</div>
+
+			<div className="space-x-4">
+				<button
+					onClick={() => handleCopy("css")}
+					className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+				>
+					{copied ? "Copied!" : "Copy CSS"}
+				</button>
+				<button
+					onClick={() => handleCopy("tailwind")}
+					className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+				>
+					{copied ? "Copied!" : "Copy Tailwind"}
+				</button>
+			</div>
+		</div>
+	);
+}
+
+function RangeInput({ label, value, setValue, min, max, step = 1 }) {
+	return (
+		<div>
+			<label className="block mb-2">
+				{label}: {value}
+			</label>
+			<input
+				type="range"
+				min={min}
+				max={max}
+				value={value}
+				onChange={(e) => setValue(Number(e.target.value))}
+				step={step}
+				className="w-full"
+			/>
+		</div>
+	);
+}
+
+
+"use client";
+import { useState } from "react";
+
+export default function Hope() {
+	const [fontSize, setFontSize] = useState(16);
+	const [fontWeight, setFontWeight] = useState(400);
+	const [lineHeight, setLineHeight] = useState(1.5);
+	const [letterSpacing, setLetterSpacing] = useState(0);
+	const [copied, setCopied] = useState(false);
+
+	const textStyle = {
+		fontSize: `${fontSize}px`,
+		fontWeight,
+		lineHeight,
+		letterSpacing: `${letterSpacing}px`,
+	};
+
+	const handleCopy = (format) => {
+		let textToCopy;
+		if (format === "css") {
+			textToCopy = `font-size: ${fontSize}px;
+font-weight: ${fontWeight};
+line-height: ${lineHeight};
+letter-spacing: ${letterSpacing}px;`;
+		} else if (format === "tailwind") {
+			textToCopy = `text-[${fontSize}px] font-[${fontWeight}] leading-[${lineHeight}] tracking-[${letterSpacing}px]`;
+		}
+
+		navigator.clipboard.writeText(textToCopy).then(() => {
+			setCopied(true);
+			setTimeout(() => setCopied(false), 2000);
+		});
+	};
+
+	return (
+		<div className="container mx-auto p-4">
+			<h1 className="text-2xl font-bold mb-4">Text Property Visualizer</h1>
+
+			<div className="mb-4">
+				<p style={textStyle}>
+					Adjust the sliders to see how the text properties change!
+				</p>
+			</div>
+
+			<div className="space-y-4 mb-4">
+				<RangeInput
+					label="Font Size"
+					value={fontSize}
+					setValue={setFontSize}
+					min={8}
+					max={72}
+				/>
+				<RangeInput
+					label="Font Weight"
+					value={fontWeight}
+					setValue={setFontWeight}
+					min={100}
+					max={900}
+					step={100}
+				/>
+				<RangeInput
+					label="Line Height"
+					value={lineHeight}
+					setValue={setLineHeight}
+					min={0.5}
+					max={3}
+					step={0.1}
+				/>
+				<RangeInput
+					label="Letter Spacing"
+					value={letterSpacing}
+					setValue={setLetterSpacing}
+					min={-5}
+					max={20}
+				/>
+			</div>
+
+			<div className="space-x-4">
+				<button
+					onClick={() => handleCopy("css")}
+					className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+				>
+					{copied ? "Copied!" : "Copy CSS"}
+				</button>
+				<button
+					onClick={() => handleCopy("tailwind")}
+					className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+				>
+					{copied ? "Copied!" : "Copy Tailwind"}
+				</button>
+			</div>
+		</div>
+	);
+}
+
+function RangeInput({ label, value, setValue, min, max, step = 1 }) {
+	return (
+		<div>
+			<label className="block mb-2">
+				{label}: {value}
+			</label>
+			<input
+				type="range"
+				min={min}
+				max={max}
+				value={value}
+				onChange={(e) => setValue(Number(e.target.value))}
+				step={step}
+				className="w-full"
+			/>
+		</div>
+	);
+}
