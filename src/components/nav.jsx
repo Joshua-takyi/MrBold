@@ -12,7 +12,7 @@ import {
 import { CamptonBold } from "./localfonts";
 export const Nav = () => {
 	return (
-		<nav className="flex justify-between items-center sticky top-0  p-4 bg-background/50 backdrop-blur-md">
+		<nav className="flex justify-between items-center sticky top-0  p-4 bg-background/50 backdrop-blur-md z-50">
 			<header>
 				<p
 					className={`${CamptonBold.className} text-[30px] font-extrabold text-primary uppercase`}

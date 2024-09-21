@@ -4,12 +4,15 @@ import { Slider } from "@/components/ui/slider";
 import { Button } from "./ui/button";
 import { Toaster, toast } from "sonner";
 import { CamptonBold } from "./localfonts";
+import { Textarea } from "./ui/textarea";
 
 // ...
 
 export const Config = () => {
+	const [text, setText] = useState("Enter Any Text Here");
 	const [fontSize, setFontSize] = useState(30);
 	const [fontWeight, setFontWeight] = useState(400);
+
 	const [lineHeight, setLineHeight] = useState(1);
 	const [letterSpacing, setLetterSpacing] = useState(0);
 	const [copied, setCopied] = useState(false);
@@ -40,17 +43,9 @@ export const Config = () => {
 	};
 
 	return (
-		<main className="p-3 overflow-hidden">
+		<main className="p-3 overflow-hidden ">
 			<div className="flex flex-col md:gap-20 gap-10">
-				<div className="md:py-20 py-10">
-					<p
-						style={textStyle}
-						className={`${CamptonBold.className} text-center`}
-					>
-						Adjust the sliders to see how the text properties change!
-					</p>
-				</div>
-				<div className="flex flex-col md:gap-5 gap-7 md:flex-row md:flex-wrap md:justify-between">
+				<div className="flex flex-col md:gap-5 gap-7 md:flex-row md:flex-wrap md:justify-between ">
 					<SliderDemo
 						value={fontSize}
 						setValue={setFontSize}
@@ -88,11 +83,23 @@ export const Config = () => {
 						label="Letter Spacing"
 					/>
 				</div>
-				<div className="flex justify-center gap-4 mt-4  text-white">
-					<Button onClick={() => handleCopy("css")}>Copy CSS</Button>
-					<Button onClick={() => handleCopy("tailwind")}>Copy Tailwind</Button>
-				</div>
+
 				{copied && <p className="text-center mt-2">Copied to clipboard!</p>}
+			</div>
+			<div>
+				<div className="md:py-20 py-10">
+					<Textarea
+						style={textStyle}
+						value={text}
+						onChange={(e) => setText(e.target.value)}
+						className={`${CamptonBold.className} text-center resize-none focus:outline-none focus:border-none focus:ring-0 uppercase`}
+					/>
+					{/* Adjust the sliders to see how the text properties change! */}
+				</div>
+			</div>
+			<div className="flex justify-center gap-4 mt-4  text-white">
+				<Button onClick={() => handleCopy("css")}>Copy CSS</Button>
+				<Button onClick={() => handleCopy("tailwind")}>Copy Tailwind</Button>
 			</div>
 			<Toaster richColors position="top-center" />
 		</main>
@@ -112,7 +119,7 @@ function SliderDemo({ value, setValue, min, max, step, id, label, ...props }) {
 				min={min}
 				step={step}
 				id={id}
-				className="w-full"
+				className="w-full cursor-pointer"
 				{...props}
 			/>
 		</div>
