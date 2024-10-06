@@ -1,25 +1,21 @@
 "use client";
-import { useState } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "./ui/button";
 import { Toaster, toast } from "sonner";
-import { CamptonBold } from "./localfonts";
 import { Textarea } from "./ui/textarea";
+import { useState } from "react";
 
-// ...
-
-export const Config = () => {
+export default function Config() {
 	const [text, setText] = useState("Enter Any Text Here");
-	const [fontSize, setFontSize] = useState(30);
-	const [fontWeight, setFontWeight] = useState(400);
+	const [fontSize, setFontSize] = useState(60);
 
 	const [lineHeight, setLineHeight] = useState(1);
-	const [letterSpacing, setLetterSpacing] = useState(0);
+
+	const [letterSpacing, setLetterSpacing] = useState(3);
 	const [copied, setCopied] = useState(false);
 
 	const textStyle = {
 		fontSize: `${fontSize}px`,
-		fontWeight,
 		lineHeight,
 		letterSpacing: `${letterSpacing}px`,
 	};
@@ -28,12 +24,11 @@ export const Config = () => {
 		let textToCopy;
 		if (format === "css") {
 			textToCopy = `font-size: ${fontSize}px;
-                font-weight: ${fontWeight};
                 line-height: ${lineHeight};
                 letter-spacing: ${letterSpacing}px;`;
 			toast.success("Copied to clipboard");
 		} else if (format === "tailwind") {
-			textToCopy = `text-[${fontSize}px] font-[${fontWeight}] leading-[${lineHeight}] tracking-[${letterSpacing}px]`;
+			textToCopy = `text-[${fontSize}px]  leading-[${lineHeight}] tracking-[${letterSpacing}px]`;
 			toast.success("Copied to clipboard");
 		}
 		navigator.clipboard.writeText(textToCopy).then(() => {
@@ -43,75 +38,68 @@ export const Config = () => {
 	};
 
 	return (
-		<main className="p-3 overflow-hidden ">
-			<div className="flex flex-col md:gap-20 gap-10">
-				<div className="flex flex-col md:gap-5 gap-7 md:flex-row md:flex-wrap md:justify-between ">
-					<SliderDemo
-						value={fontSize}
-						setValue={setFontSize}
-						min={10}
-						max={140}
-						step={1}
-						id="fontsize"
-						label="Font Size"
-					/>
-					{/* <SliderDemo
-						value={fontWeight}
-						setValue={setFontWeight}
-						min={100}
-						max={900}
-						step={100}
-						id="fontweight"
-						label="Font Weight"
-					/> */}
-					<SliderDemo
-						value={lineHeight}
-						setValue={setLineHeight}
-						min={0.5}
-						max={3}
-						step={0.1}
-						id="lineheight"
-						label="Line Height"
-					/>
-					<SliderDemo
-						value={letterSpacing}
-						setValue={setLetterSpacing}
-						min={-5}
-						max={20}
-						step={0.5}
-						id="letterspacing"
-						label="Letter Spacing"
-					/>
-				</div>
+		<section className="container mx-auto">
+			<div className="flex flex-wrap md:gap-10 gap-5 p-2">
+				<SliderDemo
+					value={fontSize}
+					setValue={setFontSize}
+					min={10}
+					max={140}
+					step={1}
+					id="fontsize"
+					label="Font Size"
+				/>
 
-				{copied && <p className="text-center mt-2">Copied to clipboard!</p>}
+				<SliderDemo
+					value={lineHeight}
+					setValue={setLineHeight}
+					min={0.5}
+					max={10}
+					step={0.1}
+					id="lineheight"
+					label="Line Height"
+				/>
+				<SliderDemo
+					value={letterSpacing}
+					setValue={setLetterSpacing}
+					min={2}
+					max={15}
+					step={1}
+					id="letterspacing"
+					label="Letter Spacing"
+				/>
 			</div>
+
+			{copied && <p className="text-center mt-2">Copied to clipboard!</p>}
 			<div>
-				<div className="md:py-20 py-10">
+				<div className="md:pt-14 pt-10">
 					<Textarea
 						style={textStyle}
 						value={text}
 						onChange={(e) => setText(e.target.value)}
-						className={`${CamptonBold.className} text-center resize-none focus:outline-none focus:border-none focus:ring-0 uppercase`}
+						className={`font-Hola  text-small-h1 text-center resize-none focus:outline-none focus:border-none focus:ring-0 uppercase `}
 					/>
 					{/* Adjust the sliders to see how the text properties change! */}
 				</div>
 			</div>
-			<div className="flex justify-center gap-4 mt-4  text-white">
-				<Button onClick={() => handleCopy("css")}>Copy CSS</Button>
+			<div className="flex justify-center gap-4 my-14  text-white">
 				<Button onClick={() => handleCopy("tailwind")}>Copy Tailwind</Button>
+				<Button onClick={() => handleCopy("css")}>Copy css</Button>
 			</div>
 			<Toaster richColors position="top-center" />
-		</main>
+		</section>
 	);
-};
+}
 
 function SliderDemo({ value, setValue, min, max, step, id, label, ...props }) {
 	return (
 		<div className="w-full md:w-[45%]">
-			<label htmlFor={id} className="block mb-2">
-				{`${label}: ${value}`}
-			</label>
+			<div className=" flex justify-between">
+				<label htmlFor={id} className="block mb-2">
+					{label}
+				</label>
+				<span>{value}px</span>
+			</div>
 			<Slider
 				defaultValue={[value]}
 				onValueChange={(newValue) => setValue(newValue[0])}

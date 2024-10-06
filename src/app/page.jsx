@@ -1,17 +1,21 @@
-import { Container } from "@/components/container";
 import { Hero } from "./hero/hero";
-import { Config } from "@/components/config";
-import Hope from "@/components/nav";
-import Footer from "./footer/footer";
+import History from "./history/History";
+import FreeToUse from "./freeSection/free";
+import Try from "./try/try";
+import Config from "@/components/config";
+import Para from "./paragraph/para";
+import Credits from "./credits/credits";
 
 export default function Home() {
 	return (
 		<div>
-			<Container>
-				<Hero />
-				<Config />
-			</Container>
-			<Footer />
+			<Hero />
+			<History />
+			<FreeToUse />
+			<Try />
+			<Config />
+			<Para />
+			<Credits />
 		</div>
 	);
 }

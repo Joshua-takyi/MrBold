@@ -5,23 +5,27 @@ import { useEffect } from "react";
 
 const LenisCom = ({ children }) => {
 	useEffect(() => {
-		// Initialize Lenis
+		// Initialize Lenis with optimized settings
 		const lenis = new Lenis({
 			smooth: true,
 			duration: 1.2, // Customize duration of the smooth scroll
-			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Customize easing function
+			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Easing function
 		});
 
-		// Create the animation frame loop for Lenis
-		function raf(time) {
+		// Create the animation frame loop
+		let animationFrameId;
+
+		const raf = (time) => {
 			lenis.raf(time);
-			requestAnimationFrame(raf);
-		}
+			animationFrameId = requestAnimationFrame(raf);
+		};
 
-		requestAnimationFrame(raf);
+		// Start the animation loop
+		animationFrameId = requestAnimationFrame(raf);
 
-		// Cleanup when the component unmounts
+		// Cleanup when the component unmounts to prevent memory leaks
 		return () => {
+			cancelAnimationFrame(animationFrameId);
 			lenis.destroy();
 		};
 	}, []);

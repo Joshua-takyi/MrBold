@@ -1,17 +1,76 @@
-import { Campton } from "../../app/layout";
+"use client";
+import { useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 export const Hero = () => {
+	const targetRef = useRef();
+	const inView = useInView(targetRef);
+	// console.log(inView);
+	const mainVariant = {
+		hidden: {
+			opacity: 0,
+			scale: 0.95,
+		},
+		visible: {
+			opacity: 1,
+			scale: 1,
+			transition: {
+				duration: 0.3,
+				ease: "easeInOut",
+			},
+		},
+		exit: {
+			y: -100,
+			opacity: 0,
+			scale: 0.95,
+			transition: {
+				duration: 0.3,
+				ease: "easeInOut",
+			},
+		},
+	};
+	const childVariant = {
+		hidden: {
+			x: 100,
+		},
+		visible: {
+			x: 0,
+		},
+	};
 	return (
-		<main
-			className={`${Campton.className} flex flex-col justify-center items-center md:leading-tight  md:gap-4 gap-5 md:py-10 p-3 py-6`}
+		<motion.main
+			className="font-campton"
+			ref={targetRef}
+			variants={mainVariant}
+			initial="hidden"
+			animate="visible"
+			exit="exit"
 		>
-			<h1 className="md:text-[70px] text-[30px] [font-weight:900] md:text-center">
-				Font Styler ; Customize and Copy with Ease
-			</h1>
-			<h2 className="md:text-center  font-medium md:text-lg text-pretty">
-				Customize fonts with interactive sliders. Adjust weight, size, and more
-				in real-time. Preview and copy your perfect styles instantly—all for
-				free.
-			</h2>
-		</main>
+			<div className="flex flex-col ">
+				<h1 className="uppercase lg:text-large-h1 md:text-medium-h1 text-small-h1 text-center text-balance  font-Hola md:tracking-wider tracking-widest leading-normal text-white p-1">
+					FontSize Forge
+				</h1>
+				<div className=" flex flex-col justify-center items-center">
+					<div className="flex flex-col gap-2 uppercase text-[12px] ">
+						{["W", "E", "L", "C", "O", "M", "E"].map((n, i) => {
+							return (
+								<motion.span
+									className="text-slate-50 uppercase p-1 text-center"
+									key={i}
+									variants={childVariant}
+									initial="hidden"
+									animate="visible"
+									transition={{
+										type: "spring",
+										delay: i * 0.5,
+									}}
+								>
+									{n}
+								</motion.span>
+							);
+						})}
+					</div>
+				</div>
+			</div>
+		</motion.main>
 	);
 };
